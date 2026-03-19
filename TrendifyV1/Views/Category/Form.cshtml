@@ -1,0 +1,15 @@
+﻿@using TrendifyV1.ViewModels.Category
+@model CategoryFormViewModel
+
+<form method="post">
+
+    <input type="hidden" asp-for="Id" />
+
+    <div>
+        Name
+        <input asp-for="Name" />
+    </div>
+
+    <button type="submit">Save</button>
+
+</form>

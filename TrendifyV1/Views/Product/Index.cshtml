@@ -1,0 +1,22 @@
+﻿@using TrendifyV1.ViewModels.Product
+@model List<ProductListViewModel>
+
+<h2>Products</h2>
+
+<a asp-action="Create">Create</a>
+
+<table>
+    @foreach (var p in Model)
+    {
+        <tr>
+            <td>@p.Name</td>
+            <td>@p.Price</td>
+            <td>@p.CategoryName</td>
+
+            <td>
+                <a asp-action="Edit" asp-route-id="@p.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@p.Id">Delete</a>
+            </td>
+        </tr>
+    }
+</table>

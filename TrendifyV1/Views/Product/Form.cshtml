@@ -1,0 +1,50 @@
+﻿@using TrendifyV1.ViewModels.Product
+@model ProductFormViewModel
+
+<form method="post">
+
+<input type="hidden" asp-for="Id" />
+
+<div>
+    Name
+    <input asp-for="Name" />
+</div>
+
+<div>
+    Price
+    <input asp-for="Price" />
+</div>
+
+<div>
+    Description
+    <textarea asp-for="Description"></textarea>
+</div>
+
+<div>
+    Image
+    <input asp-for="ImageUrl" />
+</div>
+
+<div>
+    Category
+    <select asp-for="CategoryId"
+            asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
+    </select>
+</div>
+
+<h4>Sizes</h4>
+
+@for (int i = 0; i < Model.Sizes.Count; i++)
+{
+    <input type="hidden" asp-for="Sizes[i].Id" />
+    <input type="hidden" asp-for="Sizes[i].Size" />
+
+    <div>
+        @Model.Sizes[i].Size →
+        <input asp-for="Sizes[i].Quantity" />
+    </div>
+}
+
+<button type="submit">Save</button>
+
+</form>
