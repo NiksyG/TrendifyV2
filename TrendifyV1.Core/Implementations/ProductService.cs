@@ -1,0 +1,150 @@
+﻿using TrendifyV1.Core.Interfaces;
+using TrendifyV1.Data.Entities;
+using TrendifyV1.ViewModels.CategoryViewModels;
+using TrendifyV1.ViewModels.ProductViewModels;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using TrendifyV1.Data;
+using TrendifyV1.Data.Entities;
+
+namespace TrendifyV1.Core.Implementations
+{
+    public class ProductService : IProductService
+    {
+        private readonly TrendifyV1DbContext _context;
+
+        public ProductService(TrendifyV1DbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<IEnumerable<ProductListViewModel>> GetAllProductsAsync()
+        {
+            return await _context.Products
+                .Include(p => p.Category)
+                .Select(p => new ProductListViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    ImageUrl = p.ImageUrl,
+                    CategoryName = p.Category.Name
+                })
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<CategoryListViewModel>> GetCategoriesForDropdownAsync()
+        {
+            return await _context.Categories
+                .Select(c => new CategoryListViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name
+                }).ToListAsync();
+        }
+
+        public async Task<ProductFormViewModel> GetProductForCreateAsync()
+        {
+            return new ProductFormViewModel
+            {
+                Categories = await GetCategoriesForDropdownAsync(),
+                Sizes = new List<ProductSizeInputModel>
+                {
+                    new() { Size = "S" },
+                    new() { Size = "M" },
+                    new() { Size = "L" }
+                }
+            };
+        }
+
+        public async Task CreateProductAsync(ProductFormViewModel model)
+        {
+            var product = new Product
+            {
+                Id = Guid.NewGuid(),
+                Name = model.Name,
+                Description = model.Description,
+                Price = model.Price,
+                ImageUrl = model.ImageUrl,
+                CategoryId = model.CategoryId,
+                ProductSizes = model.Sizes.Select(s => new ProductSize
+                {
+                    Size = s.Size,
+                    Quantity = s.Quantity
+                }).ToList()
+            };
+
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<ProductFormViewModel> GetProductForEditAsync(Guid id)
+        {
+            var product = await _context.Products
+                .Include(p => p.ProductSizes)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (product == null) return null;
+
+            return new ProductFormViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                ImageUrl = product.ImageUrl,
+                CategoryId = product.CategoryId,
+                Categories = await GetCategoriesForDropdownAsync(),
+                Sizes = product.ProductSizes.Select(s => new ProductSizeInputModel
+                {
+                    Id = s.Id,
+                    Size = s.Size,
+                    Quantity = s.Quantity
+                }).ToList()
+            };
+        }
+
+        public async Task<bool> UpdateProductAsync(ProductFormViewModel model)
+        {
+            var product = await _context.Products
+                .Include(p => p.ProductSizes)
+                .FirstOrDefaultAsync(p => p.Id == model.Id);
+
+            if (product == null) return false;
+
+            product.Name = model.Name;
+            product.Description = model.Description;
+            product.Price = model.Price;
+            product.ImageUrl = model.ImageUrl;
+            product.CategoryId = model.CategoryId;
+
+            product.ProductSizes.Clear();
+
+            foreach (var s in model.Sizes)
+            {
+                product.ProductSizes.Add(new ProductSize
+                {
+                    Size = s.Size,
+                    Quantity = s.Quantity
+                });
+            }
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> DeleteProductAsync(Guid id)
+        {
+            var product = await _context.Products.FindAsync(id);
+
+            if (product == null) return false;
+
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+    }
+}

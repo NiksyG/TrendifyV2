@@ -1,4 +1,4 @@
-namespace TrendifyV1.Models
+namespace TrendifyV1.ViewModels.ErrorViewModels
 {
     public class ErrorViewModel
     {

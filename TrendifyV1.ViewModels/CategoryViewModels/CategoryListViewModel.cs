@@ -1,4 +1,4 @@
-﻿namespace TrendifyV1.ViewModels.Category
+﻿namespace TrendifyV1.ViewModels.CategoryViewModels
 {
     public class CategoryListViewModel
     {

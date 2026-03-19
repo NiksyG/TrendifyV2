@@ -22,11 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TrendifyV1.Core\TrendifyV1.Core.csproj" />
     <ProjectReference Include="..\TrendifyV1.Data\TrendifyV1.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\" />
+    <ProjectReference Include="..\TrendifyV1.ViewModels\TrendifyV1.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

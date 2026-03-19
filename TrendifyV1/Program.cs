@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using TrendifyV1.Data;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using TrendifyV1.Core;
+using TrendifyV1.Core.Implementations;
+using TrendifyV1.Core.Interfaces;
 using TrendifyV1.Data.Entities;
-using TrendifyV1.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,11 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddSingleton<IEmailSender, NoOpEmailSender>();
+
+#region Services
+    builder.Services.AddScoped<ICategoryService, CategoryService>();
+    builder.Services.AddScoped<IProductService, ProductService>();
+#endregion
 
 var app = builder.Build();
 

@@ -1,4 +1,4 @@
-﻿namespace TrendifyV1.ViewModels.Product
+﻿namespace TrendifyV1.ViewModels.ProductViewModels
 {
     public class ProductListViewModel
     {

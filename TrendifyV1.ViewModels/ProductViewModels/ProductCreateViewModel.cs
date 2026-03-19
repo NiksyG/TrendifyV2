@@ -1,6 +1,7 @@
 ﻿using TrendifyV1.Data.Entities;
+using TrendifyV1.ViewModels.CategoryViewModels;
 
-namespace TrendifyV1.ViewModels.Product
+namespace TrendifyV1.ViewModels.ProductViewModels
 {
     public class ProductCreateViewModel
     {
@@ -14,7 +15,7 @@ namespace TrendifyV1.ViewModels.Product
 
         public int CategoryId { get; set; }
 
-        public IEnumerable<TrendifyV1.Data.Entities.Category>? Categories { get; set; }
+        public IEnumerable<CategoryListViewModel>? Categories { get; set; }
         public List<ProductSize> Sizes { get; set; } = new();
     }
 }
