@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using TrendifyV1.Core;
@@ -15,6 +15,9 @@ builder.Services.AddDbContext<TrendifyV1DbContext>(options =>
 //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<TrendifyV1DbContext>();
 
 //builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<TrendifyV1DbContext>();
+
+///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/// да добавя за basket и другит тука...
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
 {
@@ -36,6 +39,8 @@ builder.Services.AddSingleton<IEmailSender, NoOpEmailSender>();
 #region Services
     builder.Services.AddScoped<ICategoryService, CategoryService>();
     builder.Services.AddScoped<IProductService, ProductService>();
+    builder.Services.AddScoped<IBasketService, BasketService>();
+    builder.Services.AddScoped<IOrderService, OrderService>();
 #endregion
 
 var app = builder.Build();

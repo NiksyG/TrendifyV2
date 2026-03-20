@@ -1,0 +1,63 @@
+﻿@model TrendifyV1.ViewModels.BasketViewModels.BasketViewModel
+
+@{
+    ViewData["Title"] = "Моята количка";
+}
+
+<div class="container mt-5">
+    <h2>@ViewData["Title"]</h2>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    @if (!Model.Items.Any())
+    {
+        <div class="alert alert-info">Количката ви е празна. <a asp-controller="Product" asp-action="Index">Разгледайте нашите продукти тук!</a></div>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Продукт</th>
+                    <th>Размер</th>
+                    <th>Цена</th>
+                    <th>Количество</th>
+                    <th>Общо</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@item.ProductName</td>
+                        <td>@item.Size</td>
+                        <td>@item.Price.ToString("C")</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.TotalPrice.ToString("C")</td>
+                        <td>
+                            <form asp-controller="Basket" asp-action="Remove" method="post">
+                                <input type="hidden" name="id" value="@item.Id" />
+                                <button type="submit" class="btn btn-sm btn-danger">Премахни</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="text-end"><strong>Обща сума:</strong></td>
+                    <td><strong>@Model.TotalAmount.ToString("C")</strong></td>
+                    <td>
+                        <form asp-controller="Order" asp-action="Create" method="post">
+                            <button type="submit" class="btn btn-success">Завърши поръчката</button>
+                        </form>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    }
+</div>
