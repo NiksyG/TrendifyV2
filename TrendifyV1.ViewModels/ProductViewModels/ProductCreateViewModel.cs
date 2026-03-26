@@ -17,5 +17,11 @@ namespace TrendifyV1.ViewModels.ProductViewModels
 
         public IEnumerable<CategoryListViewModel>? Categories { get; set; }
         public List<ProductSize> Sizes { get; set; } = new();
+        public List<ProductSizeViewModel> AvailableSizes { get; set; } = new List<ProductSizeViewModel>();
+        public class ProductSizeViewModel
+        {
+            public int Id { get; set; }
+            public string Size { get; set; }
+        }
     }
 }

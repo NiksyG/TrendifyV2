@@ -12,8 +12,8 @@ using TrendifyV1.Data.Entities;
 namespace TrendifyV1.Data.Migrations
 {
     [DbContext(typeof(TrendifyV1DbContext))]
-    [Migration("20260116093211_Trendify")]
-    partial class Trendify
+    [Migration("20260325154008_changesMigration")]
+    partial class changesMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -16,8 +16,9 @@ builder.Services.AddDbContext<TrendifyV1DbContext>(options =>
 
 //builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<TrendifyV1DbContext>();
 
-///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-/// да добавя за basket и другит тука...
+//builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+//    .AddRoles<IdentityRole<Guid>>() 
+//    .AddEntityFrameworkStores<TrendifyV1DbContext>();
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
 {
@@ -65,5 +66,10 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 //app.MapGet("/", () => "App is running");
+
+using (var scope = app.Services.CreateScope())
+{
+    await TrendifyV1.Data.AdminSeeder.SeedRolesAndAdminAsync(scope.ServiceProvider);
+}
 
 app.Run();

@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using TrendifyV1.ViewModels.CategoryViewModels;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TrendifyV1.Core.Interfaces;
+using TrendifyV1.ViewModels.CategoryViewModels;
 
 namespace TrendifyV1.Controllers
 {
@@ -16,12 +17,14 @@ namespace TrendifyV1.Controllers
             return View(categories);
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public IActionResult Create()
         {
             return View("Form", new CategoryFormViewModel());
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public async Task<IActionResult> Create(CategoryFormViewModel model)
         {
@@ -34,6 +37,7 @@ namespace TrendifyV1.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -45,6 +49,7 @@ namespace TrendifyV1.Controllers
             return View("Form", vm);
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public async Task<IActionResult> Edit(CategoryFormViewModel model)
         {
@@ -55,7 +60,8 @@ namespace TrendifyV1.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost]
+        [Authorize(Roles = "Administrator")]
+        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             var success = await categoryService.DeleteCategoryAsync(id);

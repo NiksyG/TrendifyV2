@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TrendifyV1.Core.Interfaces;
 using TrendifyV1.Data.Entities;
@@ -17,26 +18,29 @@ public class ProductController(IProductService productService) : Controller
         return View(products);
     }
 
+    [Authorize(Roles = "Administrator")]
     [HttpGet]
     public async Task<IActionResult> Create()
     {
         var vm = await productService.GetProductForCreateAsync();
-        return View("Form", vm);
+        return View("Create", vm);
     }
 
+    [Authorize(Roles = "Administrator")]
     [HttpPost]
     public async Task<IActionResult> Create(ProductFormViewModel model)
     {
         if (!ModelState.IsValid)
         {
             model.Categories = await productService.GetCategoriesForDropdownAsync();
-            return View("Form", model);
+            return View("Create", model);
         }
 
         await productService.CreateProductAsync(model);
         return RedirectToAction(nameof(Index));
     }
 
+    [Authorize(Roles = "Administrator")]
     [HttpGet]
     public async Task<IActionResult> Edit(Guid id)
     {
@@ -45,16 +49,17 @@ public class ProductController(IProductService productService) : Controller
         if (vm == null)
             return NotFound();
 
-        return View("Form", vm);
+        return View("Create", vm);
     }
 
+    [Authorize(Roles = "Administrator")]
     [HttpPost]
     public async Task<IActionResult> Edit(ProductFormViewModel model)
     {
         if (!ModelState.IsValid)
         {
             model.Categories = await productService.GetCategoriesForDropdownAsync();
-            return View("Form", model);
+            return View("Create", model);
         }
 
         var success = await productService.UpdateProductAsync(model);
@@ -65,7 +70,8 @@ public class ProductController(IProductService productService) : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    [HttpPost]
+    [Authorize(Roles = "Administrator")]
+    [HttpGet]
     public async Task<IActionResult> Delete(Guid id)
     {
         var success = await productService.DeleteProductAsync(id);

@@ -1,22 +1,36 @@
-﻿@using TrendifyV1.ViewModels.ProductViewModels
-@model List<ProductListViewModel>
+﻿@using TrendifyV1.Data.Entities
+@using TrendifyV1.ViewModels.ProductViewModels
+@model IEnumerable<ProductListViewModel>
 
 <h2>Products</h2>
 
-<a asp-action="Create">Create</a>
-
-<table>
-    @foreach (var p in Model)
-    {
+@if (User.IsInRole("Administrator"))
+{
+    <a asp-action="Create">Create</a>
+}
+<table class="table">
+    <thead>
         <tr>
-            <td>@p.Name</td>
-            <td>@p.Price</td>
-            <td>@p.CategoryName</td>
-
-            <td>
-                <a asp-action="Edit" asp-route-id="@p.Id">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@p.Id">Delete</a>
-            </td>
+            <td>Name</td>
+            <td>CategoryName</td>
+            <td>ImageUrl</td>
+            <td>AvailableSizes</td>
+            <td>Price</td>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (ProductListViewModel product in Model)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.CategoryName</td>
+                <td><img src="@product.ImageUrl" /></td>
+                <td>@foreach (var item in product.AvailableSizes)
+                    {
+                        <p>@item.Size - @item.Quantity</p>
+                    } </td>
+                <td>@product.Price</td>
+            </tr>
+        }
+    </tbody>
 </table>

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TrendifyV1.Data;
 using TrendifyV1.Data.Entities;
+using static TrendifyV1.ViewModels.ProductViewModels.ProductCreateViewModel;
 
 namespace TrendifyV1.Core.Implementations
 {
@@ -19,21 +20,6 @@ namespace TrendifyV1.Core.Implementations
         public ProductService(TrendifyV1DbContext context)
         {
             _context = context;
-        }
-
-        public async Task<IEnumerable<ProductListViewModel>> GetAllProductsAsync()
-        {
-            return await _context.Products
-                .Include(p => p.Category)
-                .Select(p => new ProductListViewModel
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
-                    ImageUrl = p.ImageUrl,
-                    CategoryName = p.Category.Name
-                })
-                .ToListAsync();
         }
 
         public async Task<IEnumerable<CategoryListViewModel>> GetCategoriesForDropdownAsync()
@@ -145,6 +131,51 @@ namespace TrendifyV1.Core.Implementations
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
             return true;
+        }
+        //public async Task<IEnumerable<ProductListViewModel>> GetAllProductsAsync()
+        //{
+        //    var da = await _context.Products
+        //        .Include(p => p.Category)
+        //        .Include(p => p.ProductSizes)
+        //        .Select(p => new ProductListViewModel
+        //        {
+        //            Id = p.Id,
+        //            Name = p.Name,
+        //            Price = p.Price,
+        //            ImageUrl = p.ImageUrl,
+        //            CategoryName = p.Category.Name,
+        //            AvailableSizes = p.ProductSizes.Select(s => new ProductListViewModel.ProductSizeViewModel
+        //            {
+        //                Id = s.Id,
+        //                Size = s.Size
+        //            }).ToList()
+        //        })
+        //        .ToListAsync();
+
+        //    Console.WriteLine(string.Join(" ", da));
+        //    return da;
+        //}
+
+        public async Task<IEnumerable<ProductListViewModel>> GetAllProductsAsync()
+        {
+            var da = await _context.Products
+                .Select(p => new ProductListViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    ImageUrl = p.ImageUrl,
+                    CategoryName = p.Category.Name,
+                    AvailableSizes = p.ProductSizes.Select(s => new ProductListViewModel.ProductSizeViewModel
+                    {
+                        Id = s.Id,
+                        Size = s.Size,
+                        Quantity = s.Quantity
+                    }).ToList()
+                })
+                .ToListAsync();
+
+            return da;
         }
     }
 }
