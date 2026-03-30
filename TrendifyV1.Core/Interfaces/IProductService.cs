@@ -12,5 +12,6 @@ namespace TrendifyV1.Core.Interfaces
         Task<bool> UpdateProductAsync(ProductFormViewModel model);
         Task<bool> DeleteProductAsync(Guid id);
         Task<IEnumerable<CategoryListViewModel>> GetCategoriesForDropdownAsync();
+        Task<ProductDetailsViewModel?> GetProductDetailsAsync(Guid id);
     }
 }

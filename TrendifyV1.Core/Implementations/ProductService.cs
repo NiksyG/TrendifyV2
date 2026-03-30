@@ -107,20 +107,29 @@ namespace TrendifyV1.Core.Implementations
             product.ImageUrl = model.ImageUrl;
             product.CategoryId = model.CategoryId;
 
-            product.ProductSizes.Clear();
-
-            foreach (var s in model.Sizes)
+            foreach (var sizeInput in model.Sizes)
             {
-                product.ProductSizes.Add(new ProductSize
+                var existingSize = product.ProductSizes
+                    .FirstOrDefault(s => s.Size == sizeInput.Size);
+
+                if (existingSize != null)
                 {
-                    Size = s.Size,
-                    Quantity = s.Quantity
-                });
+                    existingSize.Quantity = sizeInput.Quantity;
+                }
+                else
+                {
+                    product.ProductSizes.Add(new ProductSize
+                    {
+                        Size = sizeInput.Size,
+                        Quantity = sizeInput.Quantity
+                    });
+                }
             }
 
             await _context.SaveChangesAsync();
             return true;
         }
+
 
         public async Task<bool> DeleteProductAsync(Guid id)
         {
@@ -176,6 +185,30 @@ namespace TrendifyV1.Core.Implementations
                 .ToListAsync();
 
             return da;
+        }
+
+        public async Task<ProductDetailsViewModel?> GetProductDetailsAsync(Guid id)
+        {
+            var product = await _context.Products
+                .Where(p => p.Id == id)
+                .Select(p => new ProductDetailsViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Description = p.Description,
+                    Price = p.Price,
+                    ImageUrl = p.ImageUrl,
+                    CategoryName = p.Category.Name,
+                    AvailableSizes = p.ProductSizes.Select(s => new ProductDetailsViewModel.ProductSizeViewModel
+                    {
+                        Id = s.Id,
+                        Size = s.Size,
+                        Quantity = s.Quantity
+                    }).ToList()
+                })
+                .FirstOrDefaultAsync();
+
+            return product;
         }
     }
 }

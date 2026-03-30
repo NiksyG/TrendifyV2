@@ -42,5 +42,20 @@ namespace TrendifyV1.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        [HttpPost]
+        public async Task<IActionResult> AddAjax(int productSizeId, int quantity = 1)
+        {
+            try
+            {
+                var userId = GetCurrentUserId();
+                await basketService.AddToBasketAsync(userId, productSizeId, quantity);
+
+                return Json(new { success = true });
+            }
+            catch
+            {
+                return Json(new { success = false, message = "Грешка при добавяне" });
+            }
+        }
     }
 }

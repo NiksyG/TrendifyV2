@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using TrendifyV1.Data.Entities; // namespace за ApplicationUser
+using TrendifyV1.Data.Entities;
 
 namespace TrendifyV1.Data
 {

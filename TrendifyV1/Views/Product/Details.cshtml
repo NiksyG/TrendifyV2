@@ -1,0 +1,105 @@
+﻿@model TrendifyV1.ViewModels.ProductViewModels.ProductDetailsViewModel
+
+<div class="container mt-5 pt-4 mb-5">
+    <nav aria-label="breadcrumb" class="mb-5">
+        <ol class="breadcrumb text-uppercase fw-bold" style="font-size: 0.8rem; letter-spacing: 1px;">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-dark text-decoration-none">Начало</a></li>
+            <li class="breadcrumb-item"><a asp-action="Index" asp-route-category="@Model.CategoryName" class="text-dark text-decoration-none">@Model.CategoryName</a></li>
+            <li class="breadcrumb-item active text-muted" aria-current="page">@Model.Name</li>
+        </ol>
+    </nav>
+
+    <div class="row gx-lg-5">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+            <div class="bg-light p-4 d-flex align-items-center justify-content-center h-100">
+                <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid" style="max-height: 700px; object-fit: contain;">
+            </div>
+        </div>
+
+        <div class="col-lg-6 ps-lg-5 pt-3">
+            <div class="mb-2 small fw-bold text-dark">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i> 
+                <span class="ms-1">4.8/5 според 627+ Доволни Клиенти</span>
+            </div>
+
+            <h1 class="text-uppercase fw-black mb-3" style="font-size: 2.2rem; letter-spacing: 1px;">@Model.Name</h1>
+            <h3 class="fw-bold mb-4">@Model.Price.ToString("F2") лв</h3>
+
+            <form asp-controller="Basket" asp-action="Add" method="post" id="addToCartForm">
+                <input type="hidden" name="productId" value="@Model.Id" />
+                
+                <div class="mb-4">
+                    <p class="small fw-bold mb-2">Размер:</p>
+                    <div class="d-flex flex-wrap gap-2 size-selector">
+                        @foreach (var size in Model.AvailableSizes)
+                        {
+                            bool isOutOfStock = size.Quantity == 0;
+                            <input type="radio" class="btn-check" name="selectedSize" id="size-@size.Size" value="@size.Size" autocomplete="off" @(isOutOfStock ? "disabled" : "") required>
+                            <label class="btn btn-outline-secondary rounded-0 fw-bold px-3 py-2 text-uppercase @(isOutOfStock ? "text-decoration-line-through text-muted bg-light" : "text-dark border-dark")" for="size-@size.Size" style="min-width: 50px;">
+                                @size.Size
+                            </label>
+                        }
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <p class="small fw-bold mb-2">Количество</p>
+                    <div class="input-group border border-dark rounded-0" style="width: 130px;">
+                        <button class="btn btn-light border-0 rounded-0 px-3 fw-bold fs-5" type="button" onclick="changeQty(-1)">-</button>
+                        <input type="number" class="form-control border-0 text-center fw-bold" name="quantity" id="quantityInput" value="1" min="1" max="10" readonly>
+                        <button class="btn btn-light border-0 rounded-0 px-3 fw-bold fs-5" type="button" onclick="changeQty(1)">+</button>
+                    </div>
+                </div>
+
+                @{
+                    bool anyStock = Model.AvailableSizes.Any(s => s.Quantity > 0);
+                }
+                <button type="submit" class="btn btn-secondary w-100 rounded-0 py-3 text-uppercase fw-bold mb-4" @(!anyStock ? "disabled" : "") style="background-color: #6c757d; border: none;">
+                    @if (anyStock) { <span>Добави в количката</span> }
+                    else { <span>Продадено</span> }
+                </button>
+
+                <div class="text-center mb-4 pb-3 border-bottom">
+                     <img src="/images/payment-methods.png" alt="Payments" style="height: 30px; object-fit: contain;" />
+                </div>
+
+                <div class="small fw-bold mt-4" style="font-size: 0.85rem;">
+                    @if(!anyStock) { <p class="text-danger mb-3"><i class="bi bi-circle-fill" style="font-size: 0.5rem;"></i> Изчерпано количество</p> }
+                    
+                    <p class="mb-3">Покупка БЕЗ РИСК: 14 дни ВРЪЩАНЕ на Пари!</p>
+                    <p class="mb-3"><i class="bi bi-truck fs-5 align-middle me-2"></i> Приблизителна доставка: 1 - 3 работни дни</p>
+                    <p class="mb-0"><i class="bi bi-box-seam fs-5 align-middle me-2"></i> Безплатна доставка на поръчки над 200 лв.</p>
+                </div>
+            </form>
+            
+            @if(!string.IsNullOrEmpty(Model.Description))
+            {
+                <div class="mt-5 pt-4 border-top">
+                    <h5 class="fw-bold text-uppercase mb-3">Описание</h5>
+                    <p class="text-muted small">@Model.Description</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    function changeQty(amount) {
+        var input = document.getElementById('quantityInput');
+        var currentVal = parseInt(input.value);
+        if (!isNaN(currentVal)) {
+            var newVal = currentVal + amount;
+            if (newVal >= 1 && newVal <= 10) {
+                input.value = newVal;
+            }
+        }
+    }
+</script>
+
+<style>
+    .size-selector .btn-check:checked + label {
+        background-color: #6c757d !important;
+        color: white !important;
+        border-color: #6c757d !important;
+    }
+</style>

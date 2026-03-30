@@ -1,49 +1,78 @@
 ﻿@model TrendifyV1.ViewModels.ProductViewModels.ProductFormViewModel
 
-<form method="post" >
+<div class="container mt-5 pt-4 mb-5">
+    <div class="card shadow-sm border-0 rounded-0">
+        <div class="card-header bg-dark text-white rounded-0 py-3">
+            <h3 class="text-uppercase fw-bold mb-0" style="letter-spacing: 2px;">
+                @(Model.Id == Guid.Empty ? "Добави Продукт" : "Редактирай Продукт")
+            </h3>
+        </div>
+        <div class="card-body p-4">
+            <form method="post">
+                <input type="hidden" asp-for="Id" />
 
-<input type="hidden" asp-for="Id" />
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Name" class="small fw-bold text-uppercase">Име на продукта</label>
+                        <input asp-for="Name" class="form-control rounded-0 border-dark" placeholder="напр. Balenciaga Black Tee" />
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
 
-<div>
-    Name
-    <input asp-for="Name" />
-</div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Price" class="small fw-bold text-uppercase">Цена (лв)</label>
+                        <input asp-for="Price" type="number" step="0.01" class="form-control rounded-0 border-dark" />
+                        <span asp-validation-for="Price" class="text-danger small"></span>
+                    </div>
+                </div>
 
-<div>
-    Price
-    <input asp-for="Price" />
-</div>
+                <div class="mb-3">
+                    <label asp-for="Description" class="small fw-bold text-uppercase">Описание</label>
+                    <textarea asp-for="Description" class="form-control rounded-0 border-dark" rows="4"></textarea>
+                    <span asp-validation-for="Description" class="text-danger small"></span>
+                </div>
 
-<div>
-    Description
-    <textarea asp-for="Description"></textarea>
-</div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="ImageUrl" class="small fw-bold text-uppercase">URL на изображение</label>
+                        <input asp-for="ImageUrl" class="form-control rounded-0 border-dark" placeholder="https://..." />
+                        <span asp-validation-for="ImageUrl" class="text-danger small"></span>
+                    </div>
 
-<div>
-    Image
-    <input asp-for="ImageUrl" />
-</div>
+                    <div class="col-md-6 mb-4">
+                        <label asp-for="CategoryId" class="small fw-bold text-uppercase">Категория</label>
+                        <select asp-for="CategoryId" class="form-select rounded-0 border-dark"
+                                asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
+                        </select>
+                    </div>
+                </div>
 
-<div>
-    Category
-    <select asp-for="CategoryId"
-            asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
-    </select>
-</div>
+                <div class="bg-light p-4 mb-4 border">
+                    <h5 class="text-uppercase fw-bold mb-3" style="font-size: 0.9rem;">Наличности по размери</h5>
+                    <div class="row">
+                        @for (int i = 0; i < Model.Sizes.Count; i++)
+                        {
+                            <div class="col-md-4 mb-3">
+                                <input type="hidden" asp-for="Sizes[i].Id" />
+                                <input type="hidden" asp-for="Sizes[i].Size" />
+                                <label class="fw-bold fs-5">@Model.Sizes[i].Size</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-dark rounded-0">Броя:</span>
+                                    <input asp-for="Sizes[i].Quantity" class="form-control border-dark rounded-0" type="number" min="0" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
 
-<h4>Sizes</h4>
-
-@for (int i = 0; i < Model.Sizes.Count; i++)
-{
-    <input type="hidden" asp-for="Sizes[i].Id" />
-    <input type="hidden" asp-for="Sizes[i].Size" />
-
-    <div>
-        @Model.Sizes[i].Size →
-        <input asp-for="Sizes[i].Quantity" />
+                <div class="d-flex gap-2 mt-4">
+                    <button type="submit" class="btn btn-dark rounded-0 px-5 py-2 text-uppercase fw-bold">Запази</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary rounded-0 px-4 py-2 text-uppercase">Отказ</a>
+                </div>
+            </form>
+        </div>
     </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }
-
-<button type="submit">Save</button>
-
-</form>

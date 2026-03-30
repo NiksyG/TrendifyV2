@@ -7,14 +7,27 @@ using TrendifyV1.ViewModels.CategoryViewModels;
 using TrendifyV1.ViewModels.ProductViewModels;
 
 namespace TrendifyV1.Controllers;
+
 public class ProductController(IProductService productService) : Controller
 {
-  
-
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string category)
     {
         var products = await productService.GetAllProductsAsync();
+
+        if (!string.IsNullOrWhiteSpace(category))
+        {
+            products = products.Where(p => p.CategoryName != null &&
+                                           p.CategoryName.Equals(category, StringComparison.OrdinalIgnoreCase))
+                               .ToList();
+
+            ViewData["Title"] = category;
+        }
+        else
+        {
+            ViewData["Title"] = "МАГАЗИН";
+        }
+
         return View(products);
     }
 
@@ -80,5 +93,19 @@ public class ProductController(IProductService productService) : Controller
             return NotFound();
 
         return RedirectToAction(nameof(Index));
+    }
+
+    [HttpGet]
+    [AllowAnonymous] 
+    public async Task<IActionResult> Details(Guid id)
+    {
+        var product = await productService.GetProductDetailsAsync(id);
+
+        if (product == null)
+        {
+            return NotFound();
+        }
+
+        return View(product);
     }
 }
