@@ -24,7 +24,7 @@ namespace TrendifyV1.Data
             }
 
             string adminUsername = "TheWeekend";
-            string adminEmail = "TheWeekndXO@gmail.com";
+            string adminEmail = "TheWeekendXO@gmail.com";
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
             var user = await userManager.FindByNameAsync(adminUsername);

@@ -2,35 +2,85 @@
 @using TrendifyV1.ViewModels.ProductViewModels
 @model IEnumerable<ProductListViewModel>
 
-<h2>Products</h2>
+<div class="container mt-5 pt-4">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+            <h2 class="text-uppercase fw-black m-0" style="letter-spacing: 3px;">
+                @((ViewData["Title"]?.ToString() == "SHOP ALL" || ViewData["Title"] == null) ? "Магазин" : ViewData["Title"])
+            </h2>
+            <p class="text-muted small text-uppercase">@Model.Count() продукта</p>
+        </div>
 
-@if (User.IsInRole("Administrator"))
-{
-    <a asp-action="Create">Create</a>
-}
-<table class="table">
-    <thead>
-        <tr>
-            <td>Name</td>
-            <td>CategoryName</td>
-            <td>ImageUrl</td>
-            <td>AvailableSizes</td>
-            <td>Price</td>
-        </tr>
-    </thead>
-    <tbody>
+        @if (User.IsInRole("Administrator"))
+        {
+            <div class="admin-actions">
+                <a asp-controller="Category" asp-action="Create" class="btn btn-outline-dark rounded-0 btn-sm text-uppercase fw-bold me-2">
+                    <i class="bi bi-plus-lg"></i> Нова Категория
+                </a>
+                <a asp-action="Create" class="btn btn-dark rounded-0 btn-sm text-uppercase fw-bold">
+                    <i class="bi bi-plus-lg"></i> Нов Продукт
+                </a>
+            </div>
+        }
+    </div>
+
+    <hr class="border-dark opacity-100 mb-5">
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
         @foreach (ProductListViewModel product in Model)
         {
-            <tr>
-                <td>@product.Name</td>
-                <td>@product.CategoryName</td>
-                <td><img src="@product.ImageUrl" /></td>
-                <td>@foreach (var item in product.AvailableSizes)
-                    {
-                        <p>@item.Size - @item.Quantity</p>
-                    } </td>
-                <td>@product.Price</td>
-            </tr>
+            <div class="col">
+                <div class="card h-100 border-0 product-card shadow-hover">
+                    <div class="position-relative overflow-hidden bg-light" style="aspect-ratio: 3/4;">
+                        <img src="@product.ImageUrl" class="card-img-top w-100 h-100"
+                             alt="@product.Name" style="object-fit: cover; transition: transform 0.5s ease;">
+
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <div class="position-absolute top-0 end-0 p-2">
+                                <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-sm btn-light rounded-0 opacity-75">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="card-body px-0 pt-3 text-center">
+                        <p class="text-muted small text-uppercase mb-1" style="font-size: 0.7rem; letter-spacing: 1px;">
+                            @product.CategoryName
+                        </p>
+                        <h6 class="text-uppercase fw-bold mb-2" style="font-size: 0.9rem;">@product.Name</h6>
+                        <p class="fw-bold mb-2">@product.Price.ToString("F2") лв.</p>
+
+                        <div class="d-flex justify-content-center gap-1 mb-3">
+                            @foreach (var sizeInfo in product.AvailableSizes.Where(s => s.Quantity > 0))
+                            {
+                                <span class="badge border border-dark text-dark rounded-0 fw-light" style="font-size: 0.6rem;">
+                                    @sizeInfo.Size
+                                </span>
+                            }
+                        </div>
+
+                        <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-dark w-100 rounded-0 text-uppercase fw-bold py-2" style="font-size: 0.8rem;">
+                            Преглед
+                        </a>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>
+
+<style>
+    .product-card {
+        transition: all 0.3s ease;
+    }
+
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+    .fw-black {
+        font-weight: 900;
+    }
+</style>
