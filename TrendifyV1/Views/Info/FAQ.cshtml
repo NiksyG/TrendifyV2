@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Често задавани въпроси";
+}
+
+<div class="container my-5" style="max-width: 900px; font-family: Arial, sans-serif;">
+    <h2 class="fw-bold text-center mb-5">Често задавани въпроси</h2>
+
+    <h4 class="fw-bold text-center mt-5 mb-4 text-uppercase">Поръчки и Контакти</h4>
+    <div class="accordion accordion-flush" id="faqOrders">
+        <div class="accordion-item">
+            <h2 class="accordion-header"><button class="accordion-button collapsed fw-bold bg-transparent shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#q1">Как да направя поръчка стъпка по стъпка?</button></h2>
+            <div id="q1" class="accordion-collapse collapse" data-bs-parent="#faqOrders"><div class="accordion-body small">Добавете желания продукт в количката и следвайте стъпките за завършване на поръчката.</div></div>
+        </div>
+        <div class="accordion-item border-top">
+            <h2 class="accordion-header"><button class="accordion-button collapsed fw-bold bg-transparent shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#q2">Как мога да се свържа с Trendify?</button></h2>
+            <div id="q2" class="accordion-collapse collapse" data-bs-parent="#faqOrders"><div class="accordion-body small">Можете да ни пишете на office.trendify@gmail.com или да се обадите на +359882447940.</div></div>
+        </div>
+        <div class="accordion-item border-top">
+            <h2 class="accordion-header"><button class="accordion-button collapsed fw-bold bg-transparent shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#q3">Какво следва да направя, ако получа повредена пратка?</button></h2>
+            <div id="q3" class="accordion-collapse collapse" data-bs-parent="#faqOrders"><div class="accordion-body small">Свържете се с нас веднага със снимки на дефекта, за да уредим замяна.</div></div>
+        </div>
+    </div>
+
+    <h4 class="fw-bold text-center mt-5 mb-4 text-uppercase">Изпращане и Доставка</h4>
+    <div class="accordion accordion-flush" id="faqShipping">
+        <div class="accordion-item border-top">
+            <h2 class="accordion-header"><button class="accordion-button collapsed fw-bold bg-transparent shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#q4">За колко време пристига доставката ми?</button></h2>
+            <div id="q4" class="accordion-collapse collapse" data-bs-parent="#faqShipping"><div class="accordion-body small">Доставката отнема между 1 и 4 работни дни след потвърждение.</div></div>
+        </div>
+        <div class="accordion-item border-top">
+            <h2 class="accordion-header"><button class="accordion-button collapsed fw-bold bg-transparent shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#q5">Мога ли да получа пратка в събота?</button></h2>
+            <div id="q5" class="accordion-collapse collapse" data-bs-parent="#faqShipping"><div class="accordion-body small">Да, ако офисът на куриера работи в събота или сте заявили приоритетна доставка.</div></div>
+        </div>
+    </div>
+</div>

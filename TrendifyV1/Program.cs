@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.EntityFrameworkCore;
 using TrendifyV1.Core;
 using TrendifyV1.Core.Implementations;
 using TrendifyV1.Core.Interfaces;
+using TrendifyV1.Data;
 using TrendifyV1.Data.Entities;
+using static System.Formats.Asn1.AsnWriter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -69,7 +71,16 @@ app.MapRazorPages();
 
 using (var scope = app.Services.CreateScope())
 {
-    await TrendifyV1.Data.AdminSeeder.SeedRolesAndAdminAsync(scope.ServiceProvider);
+    var services = scope.ServiceProvider;
+    try
+    {
+        await TrendifyV1.Data.AdminSeeder.SeedRolesAndAdminAsync(scope.ServiceProvider);
+        await TrendifyV1.Data.DatabaseSeeder.SeedProductsAsync(services);
+    }
+    catch (Exception ex)
+    {
+        throw new Exception("Грешка при сийдване: " + ex.Message, ex);
+    }
 }
-
 app.Run();
+

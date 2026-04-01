@@ -69,11 +69,41 @@
         @RenderBody()
     </main>
 
-    <footer class="footer py-4 bg-black border-top border-secondary">
-        <div class="container text-center">
-            <p class="small text-uppercase mb-0" style="letter-spacing: 3px; color: #666; font-size: 0.75rem;">
-                &copy; 2026 TRENDIFY OFFICIAL. ALL RIGHTS RESERVED.
-            </p>
+    <footer class="text-white pt-5 pb-4" style="background-color: #000; font-family: Arial, sans-serif;">
+        <div class="container-fluid px-5">
+            <div class="row">
+                <div class="col-md-2 mb-4">
+                    <h6 class="text-uppercase fw-bold mb-4 text-secondary">Trendify</h6>
+                    <ul class="list-unstyled small fw-bold">
+                        <li class="mb-3"><a asp-controller="Info" asp-action="About" class="text-white text-decoration-none">За нас</a></li>
+                        <li class="mb-3"><a asp-controller="Info" asp-action="FAQ" class="text-white text-decoration-none">Въпроси</a></li>
+                        <li class="mb-3"><a asp-controller="Info" asp-action="Contacts" class="text-white text-decoration-none">Контакти</a></li>
+                        <li class="mb-3"><a asp-controller="Info" asp-action="Shipping" class="text-white text-decoration-none">Доставка</a></li>
+                        <li class="mb-3"><a asp-controller="Info" asp-action="Returns" class="text-white text-decoration-none">Замяна и Връщане</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-2 mb-4">
+                    <h6 class="text-uppercase fw-bold mb-4 text-secondary">Политики</h6>
+                    <ul class="list-unstyled small fw-bold">
+                        <li class="mb-3"><a asp-controller="Info" asp-action="Terms" class="text-white text-decoration-none">Общи условия</a></li>
+                        <li class="mb-3"><a asp-controller="Info" asp-action="Rules" class="text-white text-decoration-none">Условия и Правила</a></li>
+                        <li class="mb-3"><a asp-controller="Info" asp-action="Privacy" class="text-white text-decoration-none">Поверителност</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-3 mb-4">
+                    <h6 class="text-uppercase fw-bold mb-4 text-secondary">Магазин</h6>
+                    <p class="mb-1 fw-bold">+359882447940</p>
+                    <p class="mb-4 fw-bold">office.trendify@gmail.com</p>
+                    <div>
+                        <a href="https://www.instagram.com/niksyg_/" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light rounded-circle me-2">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </footer>
 
