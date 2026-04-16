@@ -24,25 +24,25 @@ namespace TrendifyV1.Data
             }
 
             string adminUsername = "TheWeekend";
-            string adminEmail = "TheWeekendXO@gmail.com";
+            string adminEmail = "TheWeekndXO@gmail.com";
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
-            var user = await userManager.FindByNameAsync(adminUsername);
-
-            if (user == null)
+            //var user = await userManager.FindByNameAsync(adminUsername);
+            
+            if (adminUser == null)
             {
-                user = new ApplicationUser
+                adminUser = new ApplicationUser
                 {
                     UserName = adminUsername,
                     Email = adminEmail
                 };
 
-                await userManager.CreateAsync(user, "Admin1234*");
+                await userManager.CreateAsync(adminUser, "Admin1234*");
             }
 
-            if (!await userManager.IsInRoleAsync(user, "Administrator"))
+            if (!await userManager.IsInRoleAsync(adminUser, "Administrator"))
             {
-                await userManager.AddToRoleAsync(user, "Administrator");
+                await userManager.AddToRoleAsync(adminUser, "Administrator");
             }
         }
     }

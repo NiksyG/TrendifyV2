@@ -36,7 +36,7 @@ namespace TrendifyV1.Data
     {
         new Product {
             Name = "HYPER BLAZE STITCH HOODIE",
-            Price = 129.99m,
+            Price = 66.47m,
             Description = "Размери: Ширина 58 см 66 см 61 см | Дължина 69 см 63 см 72 см.",
             ImageUrl = "https://hyperclothing.shop/cdn/shop/files/orange_HOODIE_F.png?v=1725204913&width=823",
             CategoryId = categories["Горнища"].Id,
@@ -46,7 +46,7 @@ namespace TrendifyV1.Data
         },
         new Product {
             Name = "HYPER EDITION PANDA BLACK HOODIE",
-            Price = 139.99m,
+            Price = 71.58m,
             Description = "Размери: Ширина 58 см 66 см 61 см | Дължина 69 см 63 см 72 см.",
             ImageUrl = "https://hyperclothing.shop/cdn/shop/files/BLACK_HOODIE_F.png?v=1725194361&width=823",
             CategoryId = categories["Горнища"].Id,
@@ -56,7 +56,7 @@ namespace TrendifyV1.Data
         },
         new Product {
             Name = "BLACK KNIGHT HYPER HOODIE",
-            Price = 139.99m,
+            Price = 71.58m,
             Description = "Размери: Ширина 58 см 66 см 61 см | Дължина 69 см 63 см 72 см.",
             ImageUrl = "https://hyperclothing.shop/cdn/shop/files/KON_BLACK_FRONT.png?v=1729001004&width=823",
             CategoryId = categories["Горнища"].Id,
@@ -67,7 +67,7 @@ namespace TrendifyV1.Data
 
         new Product {
             Name = "HYPER EDITION PANDA BLACK SWEATPANTS",
-            Price = 129.99m,
+            Price = 66.47m,
             Description = "Размери: Обиколка Талия 73 см 79 см 85 см | Дължина 107 см 109 см 111 см.",
             ImageUrl = "https://hyperclothing.shop/cdn/shop/files/BLACK_PANTS_F.png?v=1725194410&width=823",
             CategoryId = categories["Долнища"].Id,
@@ -77,7 +77,7 @@ namespace TrendifyV1.Data
         },
         new Product {
             Name = "HYPER BLAZE STITCH SWEATPANTS",
-            Price = 119.99m,
+            Price = 61.35m,
             Description = "Размери: Обиколка Талия 73 см 79 см 85 см | Дължина 107 см 109 см 111 см.",
             ImageUrl = "https://hyperclothing.shop/cdn/shop/files/orange_pant_F.png?v=1725204993&width=823",
             CategoryId = categories["Долнища"].Id,
@@ -87,7 +87,7 @@ namespace TrendifyV1.Data
         },
         new Product {
             Name = "BLACK KNIGHT HYPER SWEATPANTS",
-            Price = 129.99m,
+            Price = 66.47m,
             Description = "Размери: Обиколка Талия 73 см 79 см 85 см | Дължина 107 см 109 см 111 см.",
             ImageUrl = "https://hyperclothing.shop/cdn/shop/files/KON_BLACK_PANTS_FRONT.png?v=1729001004&width=823",
             CategoryId = categories["Долнища"].Id,
@@ -98,7 +98,7 @@ namespace TrendifyV1.Data
 
         new Product {
             Name = "HYPER BLACK POCKET TEE",
-            Price = 89.99m,
+            Price = 46.01m,
             Description = "Размери: Ширина 57 см 60 см 63 см | Дължина 63 см 65 см 67 см.",
             ImageUrl = "https://hyperclothing.shop/cdn/shop/files/BLACK_POCKET_TEE_FRONT_416f0702-8c17-437a-ab3f-e3d558d5cce8.png?v=1725192906&width=823",
             CategoryId = categories["Тениски"].Id,
@@ -108,7 +108,7 @@ namespace TrendifyV1.Data
         },
         new Product {
             Name = "HYPER WINNER BLACK TEE",
-            Price = 79.99m,
+            Price = 40.90m,
             Description = "Размери: Ширина 57 см 60 см 63 см | Дължина 63 см 65 см 67 см.",
             ImageUrl = "https://hyperclothing.shop/cdn/shop/files/EJ25_ANGEL_BKTS_FLT_BACK.png?v=1738404801&width=823",
             CategoryId = categories["Тениски"].Id,
@@ -118,7 +118,7 @@ namespace TrendifyV1.Data
         },
         new Product {
             Name = "HYPER DARK KNIGHT TEE",
-            Price = 89.99m,
+            Price = 46.01m,
             Description = "Размери: Ширина 57 см 60 см 63 см | Дължина 63 см 65 см 67 см.",
             ImageUrl = "https://hyperclothing.shop/cdn/shop/files/14_2.png?v=1744205219&width=823",
             CategoryId = categories["Тениски"].Id,
@@ -129,7 +129,7 @@ namespace TrendifyV1.Data
 
         new Product {
             Name = "HYPER BLACK POCKET SHORTS",
-            Price = 99.99m,
+            Price = 51.12m,
             Description = "Размери: Обиколка кръст 76 см 80 см 84 см | Дължина 48 см 49 см 50 см.",
             ImageUrl = "https://hyperclothing.shop/cdn/shop/files/BLACK_POCKET_SHORTS_FRONT_ad5cb593-0969-4244-92f5-22b55c3d3b87.png?v=1725192749&width=823",
             CategoryId = categories["Къси панталони"].Id,
@@ -139,7 +139,7 @@ namespace TrendifyV1.Data
         },
         new Product {
             Name = "HYPER STONE WASHED KNIGHT SHORTS",
-            Price = 79.99m,
+            Price = 40.89m,
             Description = "Размери: Обиколка кръст 76 см 80 см 84 см | Дължина 48 см 49 см 50 см.",
             ImageUrl = "https://hyperclothing.shop/cdn/shop/files/WASHED_KNIGHT_SHORTS_FRONT.png?v=1725270865&width=823",
             CategoryId = categories["Къси панталони"].Id,
@@ -149,7 +149,7 @@ namespace TrendifyV1.Data
         },
         new Product {
             Name = "HYPER SKULL SHORTS",
-            Price = 99.99m,
+            Price = 51.12m,
             Description = "Размери: Обиколка кръст 76 см 80 см 84 см | Дължина 48 см 49 см 50 см.",
             ImageUrl = "https://hyperclothing.shop/cdn/shop/files/SKULL_SHORTS_FRONT.png?v=1725268584&width=823",
             CategoryId = categories["Къси панталони"].Id,
@@ -160,7 +160,7 @@ namespace TrendifyV1.Data
 
         new Product {
             Name = "XO ГЕРДАН",
-            Price = 29.99m,
+            Price = 15.33m,
             Description = "Размери: 45 см 50 см 60 см.",
             ImageUrl = "https://vvs-shop.com/cdn/shop/files/S49b4d88f26eb465a8f8a14cdd8ef2dd0O_22.jpg?v=1721296787",
             CategoryId = categories["Аксесоари"].Id,
@@ -170,7 +170,7 @@ namespace TrendifyV1.Data
         },
         new Product {
             Name = "CACTUS JACK ГЕРДАН",
-            Price = 29.99m,
+            Price = 15.33m,
             Description = "Размери: 45 см 50 см 60 см.",
             ImageUrl = "https://i.etsystatic.com/17005687/r/il/6e7f5b/2349688788/il_1588xN.2349688788_3hvb.jpg",
             CategoryId = categories["Аксесоари"].Id,
@@ -180,7 +180,7 @@ namespace TrendifyV1.Data
         },
         new Product {
             Name = "CROSS ГЕРДАН",
-            Price = 29.99m,
+            Price = 15.33m,
             Description = "Размери: 45 см 50 см 60 см.",
             ImageUrl = "https://www.zalesoutlet.com/productimages/processed/V-20449973_0_800.jpg?pristine=true",
             CategoryId = categories["Аксесоари"].Id,

@@ -10,8 +10,9 @@ namespace TrendifyV1.Core.Interfaces
     public interface IBasketService
     {
         Task<BasketViewModel> GetBasketAsync(Guid userId);
-        Task AddToBasketAsync(Guid userId, int productSizeId, int quantity);
+        Task AddToBasketAsync(Guid userId, int productSizeId, int quantity);    
         Task RemoveFromBasketAsync(int basketItemId, Guid userId);
         Task ClearBasketAsync(Guid userId);
+        Task UpdateQuantityAsync(int basketItemId, Guid userId, int delta);
     }
 }

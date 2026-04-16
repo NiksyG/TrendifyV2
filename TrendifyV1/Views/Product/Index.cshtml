@@ -33,6 +33,7 @@
                 <div class="card h-100 border-0 product-card shadow-hover">
                     <div class="position-relative overflow-hidden bg-light" style="aspect-ratio: 3/4;">
                         <img src="@product.ImageUrl" class="card-img-top w-100 h-100"
+                             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1280px-No-Image-Placeholder.svg.png';"
                              alt="@product.Name" style="object-fit: cover; transition: transform 0.5s ease;">
 
                         @if (User.IsInRole("Administrator"))
@@ -49,10 +50,10 @@
                         <p class="text-muted small text-uppercase mb-1" style="font-size: 0.7rem; letter-spacing: 1px;">
                             @product.CategoryName
                         </p>
-                        <h6 class="text-uppercase fw-bold mb-2" style="font-size: 0.9rem;">@product.Name</h6>
-                        <p class="fw-bold mb-2">@product.Price.ToString("F2") лв.</p>
+                        <h6 class="text-uppercase fw-bold mb-2 mh-35" style="font-size: 0.9rem;">@product.Name</h6>
+                        <p class="fw-bold mb-2">@product.Price.ToString("F2") €.</p>
 
-                        <div class="d-flex justify-content-center gap-1 mb-3">
+                        <div class="d-flex justify-content-center gap-1 mb-3 mh-18">
                             @foreach (var sizeInfo in product.AvailableSizes.Where(s => s.Quantity > 0))
                             {
                                 <span class="badge border border-dark text-dark rounded-0 fw-light" style="font-size: 0.6rem;">
@@ -83,4 +84,12 @@
     .fw-black {
         font-weight: 900;
     }
-</style>
+
+    .mh-18{
+        min-height: 18px;
+    }
+
+    .mh-35 {
+        min-height: 35px;
+    }
+    </style>

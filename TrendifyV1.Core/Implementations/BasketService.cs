@@ -72,6 +72,24 @@ namespace TrendifyV1.Core.Implementations
             }
         }
 
+        public async Task UpdateQuantityAsync(int basketItemId, Guid userId, int delta)
+        {
+            var item = await context.BasketItems
+                .FirstOrDefaultAsync(b => b.Id == basketItemId && b.UserId == userId);
+
+            if (item != null)
+            {
+                item.Quantity += delta;
+
+                if (item.Quantity <= 0)
+                {
+                    context.BasketItems.Remove(item);
+                }
+
+                await context.SaveChangesAsync();
+            }
+        }
+
         public async Task ClearBasketAsync(Guid userId)
         {
             var items = await context.BasketItems.Where(b => b.UserId == userId).ToListAsync();

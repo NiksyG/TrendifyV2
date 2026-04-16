@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
+    <title>@ViewData["Title"] - TrendifyV1</title>
+    <link rel="icon" type="image/png" href="/images/BlackandWhiteLogo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TRENDIFY | Official Store</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -14,10 +16,9 @@
         <nav class="navbar navbar-expand-sm navbar-dark bg-black border-bottom-dark shadow-sm">
             <div class="container-fluid">
                 <div class="row w-100 align-items-center m-0">
-
                     <div class="col-4 p-0">
                         <div class="navbar-collapse collapse d-sm-inline-flex ms-5">
-                            <ul class="navbar-nav">
+                            <ul class="navbar-nav align-items-center">
                                 <li class="nav-item">
                                     <a class="nav-link text-uppercase fw-bold" asp-controller="Product" asp-action="Index">Магазин</a>
                                 </li>
@@ -34,6 +35,15 @@
                                         <li><a class="dropdown-item text-white text-uppercase" asp-controller="Product" asp-action="Index" asp-route-category="Аксесоари">Аксесоари</a></li>
                                     </ul>
                                 </li>
+
+                                @if (User.IsInRole("Administrator"))
+                                {
+                                    <li class="nav-item ms-3 border-start border-secondary ps-3">
+                                        <a class="nav-link text-uppercase fw-bold text-warning" asp-controller="Order" asp-action="AdminIndex">
+                                            Поръчки
+                                        </a>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </div>
@@ -59,7 +69,6 @@
                             </span>
                         </a>
                     </div>
-
                 </div>
             </div>
         </nav>
@@ -82,7 +91,6 @@
                         <li class="mb-3"><a asp-controller="Info" asp-action="Returns" class="text-white text-decoration-none">Замяна и Връщане</a></li>
                     </ul>
                 </div>
-
                 <div class="col-md-2 mb-4">
                     <h6 class="text-uppercase fw-bold mb-4 text-secondary">Политики</h6>
                     <ul class="list-unstyled small fw-bold">
@@ -91,7 +99,6 @@
                         <li class="mb-3"><a asp-controller="Info" asp-action="Privacy" class="text-white text-decoration-none">Поверителност</a></li>
                     </ul>
                 </div>
-
                 <div class="col-md-3 mb-4">
                     <h6 class="text-uppercase fw-bold mb-4 text-secondary">Магазин</h6>
                     <p class="mb-1 fw-bold">+359882447940</p>
@@ -102,15 +109,9 @@
                         </a>
                     </div>
                 </div>
-
             </div>
         </div>
     </footer>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
 
     <div class="offcanvas offcanvas-end bg-black text-white" tabindex="-1" id="cartDrawer" aria-labelledby="cartDrawerLabel" style="width: 400px;">
         <div class="offcanvas-header border-bottom border-secondary">
@@ -125,11 +126,77 @@
         <div class="offcanvas-footer p-4 border-top border-secondary bg-black">
             <div class="d-flex justify-content-between mb-3 fw-bold fs-5">
                 <span class="text-uppercase">Общо:</span>
-                <span id="cartTotal">0.00 лв.</span>
+                <span id="cartTotal">0.00 €.</span>
             </div>
             <a asp-controller="Order" asp-action="Checkout" class="btn btn-light w-100 py-3 text-uppercase fw-bold rounded-0">Завърши поръчката</a>
         </div>
-
     </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        function updateMiniCart() {
+            fetch('/Basket/GetMiniCart')
+                .then(response => response.text())
+                .then(html => {
+                    const cartContent = document.getElementById('cartContent');
+                    if (cartContent) cartContent.innerHTML = html;
+
+                    const hiddenTotal = document.getElementById('hiddenCartTotal');
+                    if (hiddenTotal) document.getElementById('cartTotal').innerText = hiddenTotal.value;
+
+                    const hiddenCount = document.getElementById('hiddenCartCount');
+                    if (hiddenCount) document.getElementById('cartBadge').innerText = hiddenCount.value;
+                })
+                .catch(error => console.error('Грешка при зареждане:', error));
+        }
+
+        function openSideCart() {
+            var cartDrawer = document.getElementById('cartDrawer');
+            var bsOffcanvas = bootstrap.Offcanvas.getInstance(cartDrawer);
+            if (!bsOffcanvas) bsOffcanvas = new bootstrap.Offcanvas(cartDrawer);
+            bsOffcanvas.show();
+        }
+
+        function removeFromCart(itemId) {
+            fetch('/Basket/RemoveAjax', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'id=' + itemId
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    updateMiniCart();
+                } else {
+                    alert("Грешка: " + data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+        function changeQuantity(itemId, delta) {
+            fetch('/Basket/UpdateQuantityAjax', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'id=' + itemId + '&delta=' + delta
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    updateMiniCart();
+                } else {
+                    alert("Грешка: " + data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            updateMiniCart();
+        });
+    </script>
 </body>
 </html>

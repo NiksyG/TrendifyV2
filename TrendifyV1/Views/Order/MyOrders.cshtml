@@ -1,0 +1,50 @@
+﻿@model IEnumerable<TrendifyV1.ViewModels.UserOrderViewModels.MyOrderViewModel>
+
+<div class="container mt-5 pt-4 mb-5" style="min-height: 60vh;">
+    <h2 class="text-uppercase fw-bold mb-4 border-bottom pb-2">Моите Поръчки</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-light border rounded-0 text-center py-5">
+            <i class="bi bi-box-seam fs-1 text-muted d-block mb-3"></i>
+            <h5 class="text-uppercase fw-bold text-muted">Все още нямате направени поръчки.</h5>
+            <a asp-controller="Product" asp-action="Index" class="btn btn-dark rounded-0 mt-3 text-uppercase fw-bold">Към магазина</a>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover border">
+                <thead class="bg-dark text-white text-uppercase small">
+                    <tr>
+                        <th class="ps-3">Номер</th>
+                        <th>Дата</th>
+                        <th>Сума</th>
+                        <th>Статус</th>
+                        <th class="text-end pe-3">Детайли</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td class="ps-3 fw-bold">#@order.Id</td>
+                            <td>@order.OrderDate.ToString("dd.MM.yyyy")</td>
+                            <td class="fw-bold">@order.TotalPrice.ToString("F2") €</td>
+                            <td>
+                                @{
+                                    var statusClass = order.Status == "Доставена" ? "bg-success" :
+                                    order.Status == "Отказана" ? "bg-danger" : "bg-secondary";
+                                }
+                                <span class="badge @statusClass rounded-0 text-uppercase">@order.Status</span>
+                            </td>
+                            <td class="text-end pe-3">
+                                <a asp-action="MyOrderDetails" asp-route-id="@order.Id" class="btn btn-sm btn-outline-dark rounded-0">Преглед</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

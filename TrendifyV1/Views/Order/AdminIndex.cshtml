@@ -1,0 +1,48 @@
+﻿@model IEnumerable<TrendifyV1.ViewModels.OrderAdminViewModels.OrderListAdminViewModel>
+<div class="container mt-5 pt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+        <h2 class="text-uppercase fw-bold mb-0" style="letter-spacing: 2px;">Поръчки</h2>
+        <span class="badge bg-dark rounded-0 px-3 py-2">Общо: @Model.Count()</span>
+    </div>
+
+    <div class="card shadow-sm border-0 rounded-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0 align-middle">
+                <thead class="bg-light text-uppercase small fw-bold">
+                    <tr>
+                        <th class="ps-4 py-3">Дата</th>
+                        <th>Клиент</th>
+                        <th>Обща сума</th>
+                        <th>Статус</th>
+                        <th class="text-end pe-4">Действие</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td class="ps-4">@order.OrderDate.ToString("dd.MM.yyyy HH:mm")</td>
+                            <td class="fw-bold">@order.CustomerName</td>
+                            <td>@order.TotalPrice.ToString("F2") €</td>
+                            <td>
+                                @{
+                                    var statusClass = order.Status == "Доставена" ? "bg-success" :
+                                    order.Status == "Изпратена" ? "bg-info" : "bg-secondary";
+                                }
+                                <span class="badge @statusClass rounded-0 text-uppercase" style="font-size: 0.7rem;">
+                                    @order.Status
+                                </span>
+                            </td>
+                            <td class="text-end pe-4">
+                                <a asp-action="AdminDetails" asp-route-id="@order.Id"
+                                   class="btn btn-sm btn-outline-dark rounded-0 px-3 text-uppercase fw-bold" style="font-size: 0.75rem;">
+                                    Детайли
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

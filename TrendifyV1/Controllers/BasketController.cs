@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using TrendifyV1.Core.Interfaces;
 
 namespace TrendifyV1.Controllers
@@ -42,6 +44,7 @@ namespace TrendifyV1.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
         [HttpPost]
         public async Task<IActionResult> AddAjax(int productSizeId, int quantity = 1)
         {
@@ -52,9 +55,51 @@ namespace TrendifyV1.Controllers
 
                 return Json(new { success = true });
             }
-            catch
+            catch (Exception ex)
             {
-                return Json(new { success = false, message = "Грешка при добавяне" });
+                string exactError = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return Json(new { success = false, message = "Грешка: " + exactError });
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetMiniCart()
+        {
+            var userId = GetCurrentUserId();
+            var basketVm = await basketService.GetBasketAsync(userId);
+
+            return PartialView("_MiniCartPartial", basketVm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveAjax(int id)
+        {
+            try
+            {
+                var userId = GetCurrentUserId();
+                await basketService.RemoveFromBasketAsync(id, userId);
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Грешка при премахване от количката: " + ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateQuantityAjax(int id, int delta)
+        {
+            try
+            {
+                var userId = GetCurrentUserId();
+
+                await basketService.UpdateQuantityAsync(id, userId, delta);
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Грешка при обновяване на количеството: " + ex.Message });
             }
         }
     }
