@@ -10,4 +10,8 @@
     <ProjectReference Include="..\TrendifyV1.Data\TrendifyV1.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="AccountViewModels\" />
+  </ItemGroup>
+
 </Project>
