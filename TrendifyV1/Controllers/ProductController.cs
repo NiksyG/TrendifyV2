@@ -84,7 +84,7 @@ public class ProductController(IProductService productService) : Controller
     }
 
     [Authorize(Roles = "Administrator")]
-    [HttpGet]
+    [HttpPost]
     public async Task<IActionResult> Delete(Guid id)
     {
         var success = await productService.DeleteProductAsync(id);
