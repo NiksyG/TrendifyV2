@@ -155,7 +155,6 @@ namespace TrendifyV1.Core.Implementations
         //            CategoryName = p.Category.Name,
         //            AvailableSizes = p.ProductSizes.Select(s => new ProductListViewModel.ProductSizeViewModel
         //            {
-        //                Id = s.Id,
         public async Task<IEnumerable<ProductListViewModel>> GetAllProductsAsync()
         {
             var da = await _context.Products
