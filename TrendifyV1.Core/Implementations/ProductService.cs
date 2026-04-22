@@ -142,11 +142,7 @@ namespace TrendifyV1.Core.Implementations
             return true;
         }
         //public async Task<IEnumerable<ProductListViewModel>> GetAllProductsAsync()
-        //{
-        //    var da = await _context.Products
-        //        .Include(p => p.Category)
-        //        .Include(p => p.ProductSizes)
-        //        .Select(p => new ProductListViewModel
+
         public async Task<IEnumerable<ProductListViewModel>> GetAllProductsAsync()
         {
             var da = await _context.Products
