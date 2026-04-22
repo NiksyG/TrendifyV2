@@ -161,9 +161,6 @@ namespace TrendifyV1.Core.Implementations
         //        })
         //        .ToListAsync();
 
-        //    Console.WriteLine(string.Join(" ", da));
-        //    return da;
-        
 
         public async Task<IEnumerable<ProductListViewModel>> GetAllProductsAsync()
         {
