@@ -163,7 +163,7 @@ namespace TrendifyV1.Core.Implementations
 
         //    Console.WriteLine(string.Join(" ", da));
         //    return da;
-        //}
+        
 
         public async Task<IEnumerable<ProductListViewModel>> GetAllProductsAsync()
         {
