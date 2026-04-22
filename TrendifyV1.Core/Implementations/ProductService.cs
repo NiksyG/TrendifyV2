@@ -152,9 +152,6 @@ namespace TrendifyV1.Core.Implementations
         //            Name = p.Name,
         //            Price = p.Price,
         //            ImageUrl = p.ImageUrl,
-        //            CategoryName = p.Category.Name,
-        //            AvailableSizes = p.ProductSizes.Select(s => new ProductListViewModel.ProductSizeViewModel
-        //            {
         public async Task<IEnumerable<ProductListViewModel>> GetAllProductsAsync()
         {
             var da = await _context.Products
