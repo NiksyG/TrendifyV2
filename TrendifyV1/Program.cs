@@ -14,13 +14,6 @@ builder.Services.AddDbContext<TrendifyV1DbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("LaptopConnction")));
 
-//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<TrendifyV1DbContext>();
-
-//builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<TrendifyV1DbContext>();
-
-//builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
-//    .AddRoles<IdentityRole<Guid>>() 
-//    .AddEntityFrameworkStores<TrendifyV1DbContext>();
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
 {
@@ -67,8 +60,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
-
-//app.MapGet("/", () => "App is running");
 
 using (var scope = app.Services.CreateScope())
 {

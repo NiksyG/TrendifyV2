@@ -141,7 +141,7 @@ namespace TrendifyV1.Core.Implementations
             await _context.SaveChangesAsync();
             return true;
         }
-
+,
         public async Task<IEnumerable<ProductListViewModel>> GetAllProductsAsync()
         {
             var da = await _context.Products

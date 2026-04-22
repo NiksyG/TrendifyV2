@@ -27,7 +27,6 @@ namespace TrendifyV1.Data
             string adminEmail = "TheWeekndXO@gmail.com";
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
-            //var user = await userManager.FindByNameAsync(adminUsername);
             
             if (adminUser == null)
             {
