@@ -158,9 +158,6 @@ namespace TrendifyV1.Core.Implementations
         //                Id = s.Id,
         //                Size = s.Size
         //            }).ToList()
-        //        })
-        //        .ToListAsync();
-
 
         public async Task<IEnumerable<ProductListViewModel>> GetAllProductsAsync()
         {
